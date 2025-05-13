@@ -6,17 +6,16 @@ public class GPSMapPrinter {
     private static final double MAX_LON = -3.69;
 
     public static void imprimirMapa(List<GPSData> dataList, List<double[]> paradas) {
-        char[] mapa = new char[WIDTH];
-        java.util.Arrays.fill(mapa, '.');
-
-        // Paradas
-        for (double[] p : paradas) {
-            int x = calcularPosX(p[1]);
-            if (x >= 0 && x < WIDTH) mapa[x] = '*';
-        }
-
-        // Buses
         for (GPSData data : dataList) {
+            char[] mapa = new char[WIDTH];
+            java.util.Arrays.fill(mapa, '.');
+
+            // Marcar paradas
+            for (double[] p : paradas) {
+                int x = calcularPosX(p[1]);
+                if (x >= 0 && x < WIDTH) mapa[x] = '*';
+            }
+
             int pos = calcularPosX(data.longitude);
             String idNormalizado = data.busId.trim().toLowerCase();
 
@@ -27,16 +26,13 @@ public class GPSMapPrinter {
                 default -> '?';
             };
             if (pos >= 0 && pos < WIDTH) mapa[pos] = letra;
-        }
 
-        // Datos
-        for (GPSData data : dataList) {
-            System.out.println("[" + data.timestamp + "] " + data.busId +
-                    " Velocidad: " + data.speed + " km/h");
-            System.out.printf("Lat: %.5f, Lon: %.5f\n", data.latitude, data.longitude);
+            System.out.println("Bus " + letra);
+            System.out.println(new String(mapa));
+            System.out.println("[" + data.timestamp + "] Velocidad: " + data.speed + " km/h");
+            System.out.printf("Lat: %.5f | Lon: %.5f\n", data.latitude, data.longitude);
+            System.out.println();
         }
-
-        System.out.println(new String(mapa));
     }
 
     private static int calcularPosX(double lon) {
