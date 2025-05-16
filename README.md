@@ -10,3 +10,7 @@ Este proyecto es una aplicación Java que simula, procesa, analiza y visualiza d
 - Simulación de paradas con detención del autobús (0 km/h por 1 minuto).
 - Visualización del estado actual de cada autobús.
 - Almacenamiento y procesamiento de los datos generados.
+
+# NOTA
+
+Para poder exportar JSON, debes cargar primeramente el archivo JAR.
